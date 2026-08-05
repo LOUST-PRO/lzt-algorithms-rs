@@ -1,0 +1,25 @@
+/target
+**/*.rs.bk
+Cargo.lock
+*.pdb
+*.d
+*.o
+*.elf
+*.hex
+*.bin
+*.map
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# OS
+Thumbs.db
+
+# Secrets / local config
+.env
+.env.local
+*.key
+*.pem

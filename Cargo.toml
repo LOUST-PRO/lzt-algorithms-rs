@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lzt-cart",
+    "crates/lzt-entropy",
+    "crates/lzt-embedded-trees",
+]
+
+[workspace.package]
+edition = "2021"
+authors = ["David Mireles (@louzt) <research@loust.pro>"]
+repository = "https://github.com/LOUST-PRO/lzt-algorithms-rs"
+homepage = "https://github.com/LOUST-PRO/lzt-algorithms-rs"
+documentation = "https://docs.rs/lzt-cart"
+readme = "README.md"
+keywords = ["decision-tree", "cart", "criterion", "no-std", "embedded"]
+categories = ["algorithms", "data-structures", "embedded", "no-std"]
+license = "Apache-2.0"
+
+[workspace.metadata.lzt]
+brand = "HexCortex"
+target_crates = ["lzt-cart", "lzt-entropy", "lzt-embedded-trees"]
+cross_compile_targets = ["avr-atmega328p-none", "xtensa-esp32-espidf"]
+cross_compile_status = "configured-not-built — requires third-party toolchains (avr-rust/rust + esp-rs via espup)"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+debug = false
+strip = "symbols"
+
+[profile.dev]
+opt-level = 0
+debug = true

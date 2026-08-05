@@ -1,0 +1,21 @@
+[package]
+name = "lzt-embedded-trees"
+version = "0.1.0"
+edition.workspace = true
+license = "Apache-2.0"
+authors.workspace = true
+
+repository.workspace = true
+homepage.workspace = true
+description = "no_std threshold cascade for AVR / ESP32 — zero heap, statically allocated, binary inference."
+documentation.workspace = true
+readme = "README.md"
+keywords = ["no-std", "embedded", "decision-tree", "threshold-cascade", "avr", "xtensa"]
+categories = ["embedded", "no-std", "algorithms", "hardware-support"]
+
+[dependencies]
+
+[features]
+default = []
+# Reduce code size by simplifying the panic handler.
+small-panic = []

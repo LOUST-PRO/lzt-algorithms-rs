@@ -1,0 +1,11 @@
+{
+  "arch": "xtensa",
+  "cpu": "esp32",
+  "data-layout": "e-m:e-p:32:32-i8:8:32-i16:16:32-i64:64-n8:16:32-S128",
+  "linker-flavor": "ld.lld",
+  "llvm-target": "xtensa-esp32-espidf",
+  "max-atomic-width": 32,
+  "panic-strategy": "abort",
+  "target-pointer-width": "32",
+  "description": "Xtensa ESP32 (ESP-IDF) — bare metal, no OS, no std. Requires esp-rs toolchain (espup install) for full build."
+}

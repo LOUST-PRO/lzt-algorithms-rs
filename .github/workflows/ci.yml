@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  native-build-test:
+    name: Native build + test (stable)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust toolchain (stable)
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry and target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-stable-${{ hashFiles('**/Cargo.toml') }}
+      - name: cargo fmt --check
+        run: cargo fmt --all -- --check
+      - name: cargo build (workspace)
+        run: cargo build --workspace --all-targets
+      - name: cargo test (workspace)
+        run: cargo test --workspace --all-targets
+      - name: cargo doc
+        run: cargo doc --workspace --no-deps --document-private-items
+
+  # Disabled by default — requires nightly + third-party toolchains.
+  # See README.md §Cross-compile for the exact setup.
+  cross-compile-avr:
+    name: Cross-compile AVR (nightly, manual trigger)
+    runs-on: ubuntu-latest
+    if: false   # set to true once avr-rust toolchain is installed
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust nightly + AVR target
+        run: |
+          rustup toolchain install nightly --profile minimal -c rust-src
+          rustup +nightly target add avr-unknown-none || echo "no prebuilt — use avr-rust fork"
+      - name: Build lzt-embedded-trees for AVR
+        run: |
+          cargo +nightly build -Z build-std=core,alloc \
+            -p lzt-embedded-trees \
+            --target targets/avr-atmega328p-none.json \
+            --release

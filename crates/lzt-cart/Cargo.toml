@@ -1,0 +1,25 @@
+[package]
+name = "lzt-cart"
+version = "0.1.0"
+edition.workspace = true
+license = "Apache-2.0"
+authors.workspace = true
+
+repository.workspace = true
+homepage.workspace = true
+description = "Typed CART decision tree classifier in Rust — port of cart_classifier.c (HexCortex research pipeline)."
+documentation.workspace = true
+readme = "README.md"
+keywords = ["decision-tree", "cart", "classifier", "no-heap", "embedded-friendly"]
+categories = ["algorithms", "data-structures", "embedded"]
+
+[dependencies]
+lzt-entropy = { path = "../lzt-entropy", version = "0.1.0" }
+
+[features]
+default = []
+# Use fixed-point (Q7.8) for the impurity math on targets without f64.
+fixed-point = []
+
+[package.metadata.docs.rs]
+all-features = true

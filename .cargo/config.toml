@@ -1,0 +1,19 @@
+# Build the resolver with build-std for cross-compile to embedded targets.
+# This requires nightly because `-Z build-std` is unstable.
+# Combined with custom JSON target files (./targets/avr-atmega328p-none.json),
+# `cargo +nightly build -Z build-std=core -p lzt-embedded-trees --target targets/avr-atmega328p-none.json`
+# will at least compile core+lib. Final linking requires `avr-gcc` (apt: gcc-avr).
+[build]
+# Build profile defaults inherited from workspace.
+
+# Cross-compile linker configuration per target.
+# These are checked only when the corresponding target is invoked.
+[target.avr-atmega328p-none]
+linker = "avr-gcc"
+ar = "avr-ar"
+
+[target.xtensa-esp32-espidf]
+linker = "ld.lld"
+runner = "espflash flash --monitor"
+
+# Native targets use the default host linker.
